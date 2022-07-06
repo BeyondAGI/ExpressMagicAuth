@@ -41,7 +41,7 @@ const transporter = nodeMailer.createTransport({
 // Email Template
 const emailTemplate = ({ username, link }) => `
   <p><b>Hi ${username}!</b></p>
-  <p>Click the link to login to the ONCF High Speed app: ${link}</p>
+  <p>Click the link to login to the ONCF High Speed app: <a href="${link}">Magic Link</a></p>
 `;
 
 
@@ -83,7 +83,7 @@ app.get('/magiclink', (req, res) => {
     .then((result) => {
       console.log(result)
       if (result.data?.getUser?.lastName) {
-        const { firstName, lastName, ...other } = result;
+        const { firstName, lastName, ...other } = result.data?.getUser;
         req.query.firstName = firstName;
         req.query.lastName = lastName;
         login(req, res);
